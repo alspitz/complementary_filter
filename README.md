@@ -7,3 +7,37 @@ Supports
 * Gaussian accelerometer noise
 * Gaussian gyroscope noise
 * Brownian motion gyroscope bias drift
+
+## Sample Results
+
+### Low Accel Noise, Low Gyro Noise
+
+```console
+python main.py  --gyro-stddev 0.01 --accel-stddev-x 0.01 --accel-stddev-z 0.01
+Mean abs error is 0.000424 radians (0.024310 degrees)
+```
+
+### Low Accel Noise, High Gyro Noise
+
+```console
+python main.py  --gyro-stddev 1.0 --accel-stddev-x 0.01 --accel-stddev-z 0.01
+Mean abs error is 0.004991 radians (0.285978 degrees)
+```
+
+### High Accel Noise, Low Gyro Noise
+
+```console
+python main.py  --gyro-stddev 0.01 --accel-stddev-x 0.5 --accel-stddev-z 0.5
+Mean abs error is 0.013562 radians (0.777072 degrees)
+```
+### High Accel Noise, High Gyro Noise
+
+```console
+python main.py  --gyro-stddev 1.0 --accel-stddev-x 0.5 --accel-stddev-z 0.5
+Mean abs error is 0.014568 radians (0.834661 degrees)
+```
+
+![Results](media/Filter_Results.png)
+![Error](media/Angle_Error.png)
+![Accelerometer Data](media/Accelerometer_Data.png)
+![Gyroscope Data](media/Gyroscope_Data.png)
