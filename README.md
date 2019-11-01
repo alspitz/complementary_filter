@@ -8,6 +8,8 @@ Supports
 * Gaussian gyroscope noise
 * Brownian motion gyroscope bias drift
 
+Run `python main.py --help` to see a list of available parameters and their default values.
+
 ## Sample Results
 
 ### Low Accel Noise, Low Gyro Noise
@@ -36,6 +38,8 @@ Mean abs error is 0.013562 radians (0.777072 degrees)
 python main.py  --gyro-stddev 1.0 --accel-stddev-x 0.5 --accel-stddev-z 0.5
 Mean abs error is 0.014568 radians (0.834661 degrees)
 ```
+
+These results suggest that gyroscope additive noise has a much lower effect on attitude error than accelerometer additive noise, likely because all gyroscope measurements are multiplied by the sampling time (dt).
 
 ![Results](media/Filter_Results.png)
 ![Error](media/Angle_Error.png)

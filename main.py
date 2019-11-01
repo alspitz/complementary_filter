@@ -9,7 +9,7 @@ from est import ComplementaryFilter
 from gyro import Gyro
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser()
+  parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
   parser.add_argument("--gravity", default=9.81, type=float, required=False, help="Gravity acceleration (m/s^2)")
   parser.add_argument("--accel-stddev-x", default=0.5, type=float, required=False, help="Accel white noise stddev x")
   parser.add_argument("--accel-stddev-z", default=0.5, type=float, required=False, help="Accel white noise stddev z")
