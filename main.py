@@ -2,24 +2,12 @@ import argparse
 
 import numpy as np
 
-import matplotlib.pyplot as plt
-
 from accel import Accel
 from est import ComplementaryFilter
 from gyro import Gyro
+from utils import get_args
 
-if __name__ == "__main__":
-  parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-  parser.add_argument("--gravity", default=9.81, type=float, required=False, help="Gravity acceleration (m/s^2)")
-  parser.add_argument("--accel-stddev-x", default=0.5, type=float, required=False, help="Accel white noise stddev x")
-  parser.add_argument("--accel-stddev-z", default=0.5, type=float, required=False, help="Accel white noise stddev z")
-  parser.add_argument("--gyro-stddev", default=0.01, type=float, required=False, help="Gyro white noise stddev")
-  parser.add_argument("--gyro-biasdrift-stddev", default=0.3, type=float, required=False, help="Gyro bias drift strength")
-  parser.add_argument("--filter-acc-weight", default=0.2, type=float, required=False, help="Weight to place on accelerometer measurements [0-1]")
-  parser.add_argument("--time", default=5.0, type=float, required=False, help="Duration of time to simulate (s)")
-  parser.add_argument("--dt", default=0.005, type=float, required=False, help="Duration of time between samples (s)")
-  args = parser.parse_args()
-
+def run_simulation(args):
   t_end = args.time
   dt = args.dt
   start_angle = 0.05
@@ -53,24 +41,34 @@ if __name__ == "__main__":
 
   angle_error = angles - true_angles
   mean_abs_error = np.mean(np.abs(angle_error))
-  print("Mean abs error is %f radians (%f degrees)" % (mean_abs_error, np.degrees(mean_abs_error)))
 
-  plt.figure("Filter Results")
-  plt.plot(ts, angles, label='Estimated')
-  plt.plot(ts, true_angles, label='True')
-  plt.xlabel('Time (s)')
-  plt.ylabel('Angle (rad)')
-  plt.title("Estimated vs. True Angle")
-  plt.legend()
+  if not args.no_print:
+    print("Mean abs error is %f radians (%f degrees)" % (mean_abs_error, np.degrees(mean_abs_error)))
 
-  plt.figure("Angle Error")
-  plt.plot(ts, angle_error)
-  plt.xlabel('Time (s)')
-  plt.ylabel('Angle Error (rad)')
-  plt.title("Angle Error")
+  if not args.no_plot:
+    import matplotlib.pyplot as plt
 
-  accel_data = np.array(accel_data)
-  accel.plot(ts, accel_data)
-  gyro_data = np.array(gyro_data)
-  gyro.plot(ts, gyro_data)
-  plt.show()
+    plt.figure("Filter Results")
+    plt.plot(ts, angles, label='Estimated')
+    plt.plot(ts, true_angles, label='True')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Angle (rad)')
+    plt.title("Estimated vs. True Angle")
+    plt.legend()
+
+    plt.figure("Angle Error")
+    plt.plot(ts, angle_error)
+    plt.xlabel('Time (s)')
+    plt.ylabel('Angle Error (rad)')
+    plt.title("Angle Error")
+
+    accel_data = np.array(accel_data)
+    accel.plot(ts, accel_data)
+    gyro_data = np.array(gyro_data)
+    gyro.plot(ts, gyro_data)
+    plt.show()
+
+  return mean_abs_error
+
+if __name__ == "__main__":
+  run_simulation(get_args())

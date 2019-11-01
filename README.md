@@ -10,7 +10,17 @@ Supports
 
 Run `python main.py --help` to see a list of available parameters and their default values.
 
+Run `python param_tune.py` to see a plot of attitude error vs. accelerometer weight.
+
 ## Sample Results
+
+### Parameter Sweep
+
+Here we attempt to find the best value of the accelerometer weight by plotting the error for a series of values.
+
+![Sweep Results](media/weight_swee.png)
+
+We see that the best value of the accelerometer weight is somewhere around 0.05. The sweep can be refined by searching over more values as well as computing standard deviations of the error for each parameter value.
 
 ### Low Accel Noise, Low Gyro Noise
 
