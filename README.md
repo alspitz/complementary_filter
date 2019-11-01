@@ -18,6 +18,8 @@ Run `python param_tune.py` to see a plot of attitude error vs. accelerometer wei
 
 Here we attempt to find the best value of the accelerometer weight by plotting the error for a series of values.
 
+Keep in mind that the best value will depend heavily on the noise properties of the accelerometer and gyroscope data.
+
 ![Sweep Results](media/weight_sweep.png)
 
 We see that the best value of the accelerometer weight is somewhere around 0.05. The sweep can be refined by searching over more values as well as computing standard deviations of the error for each parameter value.
